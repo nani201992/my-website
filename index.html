@@ -1,14 +1,71 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My First Website</title>
-    <style>
-      body { font-family: sans-serif; background: #f0f0f0; text-align: center; padding: 50px; }
-      h1 { color: #333; }
-    </style>
-  </head>
-  <body>
-    <h1>Hello from my website!</h1>
-    <p>This website is made entirely on my phone.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Match Stats</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #eee;
+      font-size: 1.1em;
+    }
+    .section-header {
+      background: #ddd;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <table>
+    <!-- Match title row -->
+    <tr>
+      <th colspan="4">(Team Name A) vs (Team Name B)</th>
+    </tr>
+
+    <!-- Score rows -->
+    <tr>
+      <td colspan="3">(Team Name A) Score: <strong>20</strong></td>
+      <td>(Team Name B) Score: <strong>25</strong></td>
+    </tr>
+    <tr>
+      <td colspan="3">(Team Name A) Score: <strong>10</strong></td>
+      <td>(Team Name B) Score: <strong>25</strong></td>
+    </tr>
+
+    <!-- Players stat section header -->
+    <tr>
+      <td class="section-header" colspan="4">Players Stat</td>
+    </tr>
+
+    <!-- Player rows -->
+    <tr>
+      <td colspan="4">(Player 1)</td>
+    </tr>
+    <tr>
+      <td colspan="4">(Player 2)</td>
+    </tr>
+    <tr>
+      <td colspan="4">(Player 3)</td>
+    </tr>
+
+    <!-- You can add more rows here -->
+  </table>
+
+</body>
 </html>
