@@ -5,213 +5,153 @@
   <title>Match Stats</title>
   <style>
     body {
-      font-family: 'MyPixelFont', Monospace;
+      font-family: 'Segoe UI', sans-serif;
       background: #f9f9f9;
       padding: 20px;
     }
 
+    /* === IMAGE GRID === */
+    .avatars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 per row */
+      gap: 10px;                               /* spacing */
+      margin-bottom: 30px;                     /* space under images */
+    }
+    .avatars img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 50%;                      /* make them circular */
+      border: 2px solid #ddd;
+    }
+
+    /* === TABLE STYLES === */
     table {
       width: 100%;
       border-collapse: collapse;
       background: #ffffff;
       margin-bottom: 40px;
     }
-
     td {
       border: 1px solid #ddd;
       padding: 10px;
-      vertical-align: top;
+      vertical-align: center;
     }
-
-    .title {
+    .matchn {
+      text-align: center;
       font-size: 1.2em;
       font-weight: bold;
-      text-align: center;
     }
-
+    .title {
+      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
     .score {
       text-align: center;
       font-weight: bold;
       color: #00529B;
     }
-
     .section-header {
-      font-size: 1.1em;
-      font-weight: bold;
       text-align: center;
-      background-color: #e49;
+      background: #e49;
+      font-weight: bold;
     }
-
     .player {
       font-weight: bold;
-      color: #448;
-      text-align: center;
+      background: #11;
     }
-
     .stats {
-      color: #464;
-      line-height: 1.5;
-      white-space: pre-line;
+      white-space: pre-line;  /* honor line breaks */
     }
   </style>
 </head>
 <body>
 
-  <!-- Match Block -->
+  <!-- === IMAGE GRID: copy/paste <img> tags for each avatar === -->
+  
+  <div class="avatars">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563069636804729/Screenshot_20250803-2047413.png?ex=6890bad3&is=688f6953&hm=862c4e550280d1b3a1e3c6ad48d3c004d670bd6590cb9ee7fde81703829ecc4a&" alt="Avatar 1">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563069930410115/Screenshot_20250803-2047412.png?ex=6890bad3&is=688f6953&hm=720a62c23d2103bee1fbf5d29540d376bc11c692a72316e8ec82b6c51e516c94&" alt="Avatar 2">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563364643311756/Screenshot_20250803-2050153.png?ex=6890bb19&is=688f6999&hm=f9d5681bbd1e226b3feb1edfab12d46e19b1e72ba8538e3ea4d341996d924b2c&" alt="Avatar 3">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563364861411410/Screenshot_20250803-2050152.png?ex=6890bb19&is=688f6999&hm=eeb1408fe39868c217cfeb4ac51fefe54e29bd0ea3b357b75e8bd20bdc0ec1d4&" alt="Avatar 4">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563365297623040/Screenshot_20250803-2050102.png?ex=6890bb1a&is=688f699a&hm=08d79de71c6f48553e15b0dda7dd7d1a21cb8da9e5c94d75f8fd82284c033e38&" alt="Avatar 5">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563365087776830/Screenshot_20250803-2050103.png?ex=6890bb1a&is=688f699a&hm=e2de466a0ddc41bd8bb8842f32953e2f844e8a530ce120cb96ec28aa47773618&" alt="Avatar 6">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401574717579595877/Screenshot_20250803-2135012.png?ex=6890c5ac&is=688f742c&hm=d8be277c487915d2adbf915ebe53796d22e863912d0641dc775a799e8822790e&" alt="Avatar 6">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563511188099164/Screenshot_20250803-2052392.png?ex=6890bb3c&is=688f69bc&hm=b0b5c7044a164b23634dfe08927f4738af6a47c3f432252071543b62b10b4eba&g" alt="Avatar 6">
+    <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401578792266366986/Screenshot_20250803-2152412.png?ex=6890c978&is=688f77f8&hm=9ba6cfc43bc35d14a8ca526cc8cb508f3f5053e8bc653357bfe504b218b733bc&">
+  </div>
+
+  <!-- === YOUR MATCH TABLE === -->
   <table>
-    <!-- Match title -->
     <tr>
-      <td></td>
-      <td class="title" colspan="2">(Team A) vs (Team B)</td>
-      <td></td>
+      <td class="matchn" colspan="2">match 206</td>
     </tr>
-
-    <!-- Scores -->
     <tr>
-      <td></td>
-      <td class="score" colspan="2">20 | 25 (Team A)</td>
+      <td class="title" colspan="2">ecstasy vs bts</td>
       <td></td>
     </tr>
     <tr>
-      <td></td>
-      <td class="score" colspan="2">10 | 25 (Team B)</td>
+      <td class="score" colspan="2">25 | 14 ecs</td>
       <td></td>
     </tr>
-
-    <!-- Players stat header -->
+    <tr>
+      <td class="score" colspan="2">25 | 21 bts</td>
+      <td></td>
+    </tr>
     <tr>
       <td colspan="4" class="section-header">Players Stat</td>
     </tr>
-
-    <!-- Player 1 -->
     <tr>
-      <td colspan="2" class="player">nani</td>
+      <td colspan="2" class="player">jaq</td>
       <td colspan="2" class="stats">
-        spike = 5/5<br>
-        rec = 4/4
+        spike = 3/7<br>
+        rec = 1/1
       </td>
     </tr>
-
-    <!-- Player 2 -->
     <tr>
-      <td colspan="2" class="player">nani</td>
+      <td colspan="2" class="player">jerry</td>
       <td colspan="2" class="stats">
-        spike = 3/5<br>
-        rec = 2/4
+        spike = 1/4<br>
+        rec = 2/3
       </td>
     </tr>
-
-  </table>
-
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Match Stats</title>
-  <style>
-    body {
-      font-family: 'MyPixelFont', Monospace;
-      background: #f9f9f9;
-      padding: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #ffffff;
-      margin-bottom: 40px;
-    }
-
-    td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      vertical-align: top;
-    }
-
-    .title {
-      font-size: 1.2em;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .score {
-      text-align: center;
-      font-weight: bold;
-      color: #00529B;
-    }
-
-    .section-header {
-      font-size: 1.1em;
-      font-weight: bold;
-      text-align: center;
-      background-color: #e49;
-    }
-
-    .player {
-      font-weight: bold;
-      color: #448;
-    }
-
-    .stats {
-      color: #464;
-      line-height: 1.5;
-      white-space: pre-line;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Match Block -->
-  <table>
-    <!-- Match title -->
     <tr>
-      <td></td>
-      <td class="title" colspan="2">(Team A) vs (Team B)</td>
-      <td></td>
-    </tr>
-
-    <!-- Scores -->
-    <tr>
-      <td></td>
-      <td class="score" colspan="2">20 | 25 (Team A)</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td class="score" colspan="2">10 | 25 (Team B)</td>
-      <td></td>
-    </tr>
-      <tr>
-      <td></td>
-      <td class="score" colspan="2">14 | 25 (Team B)</td>
-      <td></td>
-    </tr>
-    <!-- Players stat header -->
-    <tr>
-      <td colspan="4" class="section-header">Players Stat</td>
-    </tr>
-
-    <!-- Player 1 -->
-    <tr>
-      <td colspan="2" class="player">nani</td></td>
+      <td colspan="2" class="player">buddy</td>
       <td colspan="2" class="stats">
-        spike = 50/50<br>
-        rec = 4/4
+        spike = 2/6
+        
+        rec 1/6
       </td>
     </tr>
-
-    <!-- Player 2 -->
     <tr>
-      <td colspan="2" class="player">nani</td>
+      <td colspan="2" class="player">phuc</td>
       <td colspan="2" class="stats">
-        spike = 3/5<br>
-        rec = 60/60
+        spike = 1/8
+        
+        rec = 2/5
       </td>
     </tr>
-
+    <tr>
+      <td colspan="2" class="player">elo</td>
+      <td colspan="2" class="stats">
+        spike = 5/9 <br>
+        rec = 3/6 
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="player">2dior</td>
+      <td colspan="2" class="stats">
+        spike = 1/5 <br>
+        rec = 2/3
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="title">
+        mvp: <br>
+        elocaotuonglangau
+      </td>
+    </tr>
   </table>
 
 </body>
