@@ -5,66 +5,213 @@
   <title>Match Stats</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'MyPixelFont', Monospace;
+      background: #f9f9f9;
       padding: 20px;
-      background: #f7f7f7;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #fff;
+      background: #ffffff;
+      margin-bottom: 40px;
     }
-    th, td {
-      border: 1px solid #ccc;
+
+    td {
+      border: 1px solid #ddd;
       padding: 10px;
+      vertical-align: top;
+    }
+
+    .title {
+      font-size: 1.2em;
+      font-weight: bold;
       text-align: center;
     }
-    th {
-      background: #eee;
-      font-size: 1.1em;
-    }
-    .section-header {
-      background: #ddd;
+
+    .score {
+      text-align: center;
       font-weight: bold;
-      font-size: 1.2em;
+      color: #00529B;
+    }
+
+    .section-header {
+      font-size: 1.1em;
+      font-weight: bold;
+      text-align: center;
+      background-color: #e49;
+    }
+
+    .player {
+      font-weight: bold;
+      color: #448;
+      text-align: center;
+    }
+
+    .stats {
+      color: #464;
+      line-height: 1.5;
+      white-space: pre-line;
     }
   </style>
 </head>
 <body>
 
+  <!-- Match Block -->
   <table>
-    <!-- Match title row -->
+    <!-- Match title -->
     <tr>
-      <th colspan="4">(Team Name A) vs (Team Name B)</th>
+      <td></td>
+      <td class="title" colspan="2">(Team A) vs (Team B)</td>
+      <td></td>
     </tr>
 
-    <!-- Score rows -->
+    <!-- Scores -->
     <tr>
-      <td colspan="3">(Team Name A) Score: <strong>20</strong></td>
-      <td>(Team Name B) Score: <strong>25</strong></td>
+      <td></td>
+      <td class="score" colspan="2">20 | 25 (Team A)</td>
+      <td></td>
     </tr>
     <tr>
-      <td colspan="3">(Team Name A) Score: <strong>10</strong></td>
-      <td>(Team Name B) Score: <strong>25</strong></td>
-    </tr>
-
-    <!-- Players stat section header -->
-    <tr>
-      <td class="section-header" colspan="4">Players Stat</td>
+      <td></td>
+      <td class="score" colspan="2">10 | 25 (Team B)</td>
+      <td></td>
     </tr>
 
-    <!-- Player rows -->
+    <!-- Players stat header -->
     <tr>
-      <td colspan="4">(Player 1)</td>
-    </tr>
-    <tr>
-      <td colspan="4">(Player 2)</td>
-    </tr>
-    <tr>
-      <td colspan="4">(Player 3)</td>
+      <td colspan="4" class="section-header">Players Stat</td>
     </tr>
 
-    <!-- You can add more rows here -->
+    <!-- Player 1 -->
+    <tr>
+      <td colspan="2" class="player">nani</td>
+      <td colspan="2" class="stats">
+        spike = 5/5<br>
+        rec = 4/4
+      </td>
+    </tr>
+
+    <!-- Player 2 -->
+    <tr>
+      <td colspan="2" class="player">nani</td>
+      <td colspan="2" class="stats">
+        spike = 3/5<br>
+        rec = 2/4
+      </td>
+    </tr>
+
+  </table>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Match Stats</title>
+  <style>
+    body {
+      font-family: 'MyPixelFont', Monospace;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      margin-bottom: 40px;
+    }
+
+    td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    .title {
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .score {
+      text-align: center;
+      font-weight: bold;
+      color: #00529B;
+    }
+
+    .section-header {
+      font-size: 1.1em;
+      font-weight: bold;
+      text-align: center;
+      background-color: #e49;
+    }
+
+    .player {
+      font-weight: bold;
+      color: #448;
+    }
+
+    .stats {
+      color: #464;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Match Block -->
+  <table>
+    <!-- Match title -->
+    <tr>
+      <td></td>
+      <td class="title" colspan="2">(Team A) vs (Team B)</td>
+      <td></td>
+    </tr>
+
+    <!-- Scores -->
+    <tr>
+      <td></td>
+      <td class="score" colspan="2">20 | 25 (Team A)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="score" colspan="2">10 | 25 (Team B)</td>
+      <td></td>
+    </tr>
+      <tr>
+      <td></td>
+      <td class="score" colspan="2">14 | 25 (Team B)</td>
+      <td></td>
+    </tr>
+    <!-- Players stat header -->
+    <tr>
+      <td colspan="4" class="section-header">Players Stat</td>
+    </tr>
+
+    <!-- Player 1 -->
+    <tr>
+      <td colspan="2" class="player">nani</td></td>
+      <td colspan="2" class="stats">
+        spike = 50/50<br>
+        rec = 4/4
+      </td>
+    </tr>
+
+    <!-- Player 2 -->
+    <tr>
+      <td colspan="2" class="player">nani</td>
+      <td colspan="2" class="stats">
+        spike = 3/5<br>
+        rec = 60/60
+      </td>
+    </tr>
+
   </table>
 
 </body>
