@@ -3,8 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Scrim Results — Modern</title>
+  <title>Scrim Results — Home</title>
+
+  <!-- Inter font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg:#f6f8fb;
@@ -54,7 +57,7 @@
     }
     .subtitle{color:var(--muted);font-size:13px;font-weight:600}
 
-    /* Avatar grid */
+    /* Avatar grid (empty-by-default) */
     .avatars{
       display:grid;
       grid-template-columns:repeat(auto-fill,minmax(84px,1fr));
@@ -64,62 +67,70 @@
       background:var(--card);padding:12px;border-radius:14px;
       display:flex;align-items:center;justify-content:center;
       box-shadow:var(--shadow);transition:transform .12s ease;
+      min-height:94px;
+      border:1px solid rgba(12,24,40,0.03);
     }
-    .avatar img{width:64px;height:64px;border-radius:50%;object-fit:cover;display:block}
-    .avatar:hover{transform:translateY(-6px)}
+    .avatar.empty{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+      background:linear-gradient(180deg,#fff,#fbfcff);
+    }
 
-    /* Matches list */
+    /* Matches list — empty initially */
     .matches{display:flex;flex-direction:column;gap:16px;margin-top:6px}
-
-    .match-card{
+    .empty-state{
       background:var(--card);
-      border-radius:var(--radius);
-      padding:16px;
+      border-radius:12px;
+      padding:28px;
+      text-align:center;
       box-shadow:var(--shadow);
-      transition:transform .12s ease,box-shadow .12s ease;
-      overflow:hidden;
+      border:1px solid rgba(12,24,40,0.03);
     }
-    .match-card:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(12,24,40,0.08)}
-
-    .match-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .match-meta{display:flex;flex-direction:column;gap:2px}
-    .match-number{color:var(--muted);font-weight:700;font-size:13px}
-    .match-title{font-weight:800;font-size:18px}
-
-    .score-row{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
-    .score-pill{
-      padding:8px 12px;border-radius:12px;background:linear-gradient(180deg,#eef6ff,#f8fbff);
-      color:var(--primary);font-weight:800;border:1px solid rgba(11,102,255,0.06)
-    }
-
-    /* Players area */
-    .players{
-      display:grid;
-      grid-template-columns: 1fr 220px;
-      gap:10px;
-      margin-top:14px;
-      align-items:start;
-    }
-    .player-name{
-      font-weight:700;font-size:15px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);
-      border:1px solid rgba(12,24,40,0.03)
-    }
-    .player-stats{
-      text-align:right;color:var(--muted);font-weight:700;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);
-      border:1px solid rgba(12,24,40,0.03)
+    .empty-title{font-weight:800;font-size:20px;margin-bottom:6px}
+    .empty-sub{color:var(--muted);margin-bottom:12px}
+    .cta{
+      display:inline-block;
+      background:var(--primary);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow: 0 8px 20px rgba(11,102,255,0.12);
     }
 
-    /* mvp row */
-    .mvp{margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid rgba(12,24,40,0.03);font-weight:700}
-
-    @media (max-width:880px){
-      .players{grid-template-columns:1fr}
-      .player-stats{text-align:left}
-      .match-title{font-size:16px}
+    /* Scrim card CSS used by renderer (kept, so injected cards match site style) */
+    .scrim-card{
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      max-width:100%;
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 12px 30px rgba(12,24,40,0.06);
+      padding:16px;
+      color:#0f172a;
+      border:1px solid rgba(12,24,40,0.03);
+      transition:transform .12s ease, box-shadow .12s ease;
     }
-    @media (max-width:480px){
-      body{padding:12px}
-      .avatar img{width:56px;height:56px}
+    .scrim-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .scrim-avatars{display:flex;gap:8px}
+    .scrim-avatars img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,0,0,0.04)}
+    .scrim-meta{flex:1;min-width:180px}
+    .scrim-matchnum{color:var(--muted);font-weight:700;font-size:13px}
+    .scrim-title{font-weight:800;font-size:18px;margin-top:2px}
+    .scrim-scores{display:flex;gap:8px;margin-left:auto}
+    .scrim-pill{background:linear-gradient(180deg,#eef6ff,#f8fbff);color:var(--primary);padding:8px 12px;border-radius:12px;font-weight:800;border:1px solid rgba(11,102,255,0.06)}
+    .scrim-body{display:grid;grid-template-columns:1fr 180px;gap:12px;margin-top:14px;align-items:start}
+    .scrim-player{padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid rgba(12,24,40,0.03);font-weight:700}
+    .scrim-stats{text-align:right;color:var(--muted);font-weight:700;padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid rgba(12,24,40,0.03)}
+    .scrim-mvp{margin-top:12px;padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid rgba(12,24,40,0.03);font-weight:700}
+    @media (max-width:760px){
+      .scrim-body{grid-template-columns:1fr}
+      .scrim-stats{text-align:left}
+      .scrim-avatars img{width:40px;height:40px}
     }
 
     /* subtle animation */
@@ -136,40 +147,95 @@
         <div class="logo">SR</div>
         <div>
           <div class="title">Scrim Results</div>
-          <div class="subtitle">match tracker</div>
+          <div class="subtitle">Clean, responsive — matches: 0</div>
         </div>
+      </div>
+
+      <div>
+        <!-- You can link this to your repo or admin UI -->
+        <a class="cta" href="https://github.com/nani201992">Open repo</a>
       </div>
     </header>
 
-    <!-- Avatars (top) -->
+    <!-- Avatar grid (empty placeholders) -->
     <div class="avatars" aria-hidden="false">
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563069636804729/Screenshot_20250803-2047413.png?ex=6890bad3&is=688f6953&hm=862c4e550280d1b3a1e3c6ad48d3c004d670bd6590cb9ee7fde81703829ecc4a&" alt=""></div>
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563069930410115/Screenshot_20250803-2047412.png?ex=6890bad3&is=688f6953&hm=720a62c23d2103bee1fbf5d29540d376bc11c692a72316e8ec82b6c51e516c94&" alt=""></div>
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563364643311756/Screenshot_20250803-2050153.png?ex=6890bb19&is=688f6999&hm=f9d5681bbd1e226b3feb1edfab12d46e19b1e72ba8538e3ea4d341996d924b2c&" alt=""></div>
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563364861411410/Screenshot_20250803-2050152.png?ex=6890bb19&is=688f6999&hm=eeb1408fe39868c217cfeb4ac51fefe54e29bd0ea3b357b75e8bd20bdc0ec1d4&" alt=""></div>
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563365297623040/Screenshot_20250803-2050102.png?ex=6890bb1a&is=688f699a&hm=08d79de71c6f48553e15b0dda7dd7d1a21cb8da9e5c94d75f8fd82284c033e38&" alt=""></div>
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563365087776830/Screenshot_20250803-2050103.png?ex=6890bb1a&is=688f699a&hm=e2de466a0ddc41bd8bb8842f32953e2f844e8a530ce120cb96ec28aa47773618&" alt=""></div>
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401574717579595877/Screenshot_20250803-2135012.png?ex=6890c5ac&is=688f742c&hm=d8be277c487915d2adbf915ebe53796d22e863912d0641dc775a799e8822790e&" alt=""></div>
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401563511188099164/Screenshot_20250803-2052392.png?ex=6890bb3c&is=688f69bc&hm=b0b5c7044a164b23634dfe08927f4738af6a47c3f432252071543b62b10b4eba&g" alt=""></div>
-      <div class="avatar"><img src="https://cdn.discordapp.com/attachments/1059450546626494475/1401578792266366986/Screenshot_20250803-2152412.png?ex=6890c978&is=688f77f8&hm=9ba6cfc43bc35d14a8ca526cc8cb508f3f5053e8bc653357bfe504b218b733bc&" alt=""></div>
+      <!-- Keep this empty or add <div class="avatar empty">No avatars</div> -->
+      <div class="avatar empty">No avatars</div>
+      <div class="avatar empty">No avatars</div>
+      <div class="avatar empty">No avatars</div>
+      <div class="avatar empty">No avatars</div>
+      <div class="avatar empty">No avatars</div>
+      <div class="avatar empty">No avatars</div>
     </div>
 
-    <!-- Matches -->
-    <div class="matches">
+    <!-- Matches area (currently empty) -->
+    <div class="matches" id="matches">
+      <div class="empty-state">
+        <div class="empty-title">No matches yet</div>
+        <div class="empty-sub">You restarted matches to 0. Use your Discord command (<code>/newresult</code>) to add the first match, or paste a JSON embed into the page.</div>
+        <a class="cta" href="https://github.com/nani201992">Open repo to edit</a>
+      </div>
+      <!--
+        When your bot/app adds a match it should append a small JSON placeholder like:
+        <div class="scrim-embed" data-match='{"match":206,"teamA":"ecstasy","teamB":"bts","sets":["25 | 14 ecs","25 | 21 bts"],"avatars":[],"players":[{"name":"jaq","stats":"spike=3/7\nrec=1/1"}],"mvp":"jaq"}'></div>
 
-    </div> <!-- .matches -->
-  </div> <!-- .container -->
+        The renderer below will convert that placeholder into a styled scrim card.
+      -->
+    </div>
 
+  </div>
+
+  <!-- Renderer script: converts .scrim-embed JSON placeholders into cards -->
   <script>
-    // Small helper: click any score-pill to copy it (nice tiny interaction)
-    document.addEventListener('click', (e) => {
-      const pill = e.target.closest('.score-pill');
-      if (!pill) return;
-      navigator.clipboard?.writeText(pill.textContent.trim()).then(() => {
-        pill.style.transform = 'scale(0.98)';
-        setTimeout(()=>pill.style.transform='',160);
-      }).catch(()=>{ /* ignore */});
-    });
+    (function(){
+      function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+      function renderCard(obj){
+        const wrapper = document.createElement('div');
+        wrapper.className = 'scrim-card';
+
+        const avatarsHtml = (obj.avatars||[]).slice(0,6).map(u => `<img src="${escapeHtml(u)}" alt="">`).join('');
+        const scoresHtml = (obj.sets||[]).map(s => `<div class="scrim-pill">${escapeHtml(s)}</div>`).join('');
+        const players = obj.players || [];
+        let namesHtml = '', statsHtml = '';
+        for (const p of players) {
+          namesHtml += `<div class="scrim-player">${escapeHtml(p.name||'—')}</div>\n`;
+          statsHtml += `<div class="scrim-stats">${escapeHtml(p.stats||'—')}</div>\n`;
+        }
+        if (!namesHtml) { namesHtml = `<div class="scrim-player">—</div>`; statsHtml = `<div class="scrim-stats">—</div>`; }
+
+        wrapper.innerHTML = `
+          <div class="scrim-top">
+            <div class="scrim-avatars">${avatarsHtml}</div>
+            <div class="scrim-meta">
+              <div class="scrim-matchnum">match ${escapeHtml(String(obj.match||''))}</div>
+              <div class="scrim-title">${escapeHtml(obj.teamA||'Team A')} <span style="color:var(--muted);font-weight:700">vs</span> ${escapeHtml(obj.teamB||'Team B')}</div>
+            </div>
+            <div class="scrim-scores">${scoresHtml}</div>
+          </div>
+          <div class="scrim-body">
+            <div>${namesHtml}</div>
+            <div>${statsHtml}</div>
+          </div>
+          ${ obj.mvp ? `<div class="scrim-mvp">MVP: <strong>${escapeHtml(obj.mvp)}</strong></div>` : '' }
+        `;
+        return wrapper;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const nodes = document.querySelectorAll('.scrim-embed[data-match]');
+        nodes.forEach(n => {
+          try {
+            const json = n.getAttribute('data-match');
+            const obj = JSON.parse(json);
+            const card = renderCard(obj);
+            n.replaceWith(card);
+          } catch (e) {
+            console.error('scrim-embed parse error', e);
+          }
+        });
+      });
+    })();
   </script>
 </body>
 </html>
