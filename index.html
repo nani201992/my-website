@@ -7,15 +7,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#f6f8fb; --card:#fff; --primary:#0b66ff; --muted:#6b7280;
-      --radius:12px; --shadow:0 12px 30px rgba(12,24,40,0.06); --container:1100px;
+      --bg:#f6f8fb;
+      --card:#fff;
+      --primary:#0b66ff;
+      --muted:#6b7280;
+      --radius:12px;
+      --shadow:0 12px 30px rgba(12,24,40,0.06);
+      --container:1100px;
     }
+
     *{box-sizing:border-box}
     body{
-      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial; background:var(--bg);
-      color:#0f172a; padding:20px; display:flex; justify-content:center;
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:var(--bg);
+      color:#0f172a;
+      padding:20px;
+      display:flex;
+      justify-content:center;
     }
-    .container{width:100%;max-width:var(--container);display:flex;flex-direction:column;gap:18px}
+
+    .container{
+      width:100%;
+      max-width:var(--container);
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
 
     /* Header */
     .header{display:flex;justify-content:space-between;align-items:center}
@@ -24,64 +42,98 @@
     .title{font-weight:800;font-size:18px}
     .subtitle{color:var(--muted);font-size:13px}
 
-    /* AVATAR — 2 per row, larger */
+    /* ===== REPLACED avatar + match layout rules ===== */
+
+    /* Avatar grid: 2-per-row on wide, 1-per-row on small screens.
+       Limit max widths so avatars don't overflow on mobile. */
     .avatars{
       display:grid;
-      grid-template-columns: repeat(2, 1fr); /* 2 avatars per row */
+      grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2-per-row but never overflow */
       gap:18px;
       align-items:center;
       justify-items:center;
-      margin-top:6px;
+      margin: 12px auto 6px;
+      width: 100%;
+      max-width: 760px; /* cap the total avatars area */
+      padding: 0 12px;  /* small horizontal padding on mobile */
     }
+
+    /* Avatar card sizing */
     .avatar{
       background:var(--card);
-      padding:18px;
+      padding:14px;
       border-radius:14px;
       display:flex;
       align-items:center;
       justify-content:center;
       box-shadow:var(--shadow);
-      min-height:140px;
+      min-height:120px;
       width:100%;
-      max-width:420px;
+      max-width:280px;        /* reduced so it fits mobile */
       border:1px solid rgba(12,24,40,0.03);
+      margin: 0 auto;
     }
+
+    /* Larger image but constrained */
     .avatar img{
-      width:120px;
-      height:120px;
+      width:112px;
+      height:112px;
       border-radius:50%;
       object-fit:cover;
       display:block;
       border:4px solid rgba(255,255,255,0.9);
       box-shadow: 0 8px 24px rgba(12,24,40,0.08);
     }
-    @media (max-width:480px){
+
+    @media (max-width:600px){
+      .avatars{ grid-template-columns: 1fr; gap:12px; max-width: 420px; }
+      .avatar{ max-width: 380px; min-height:110px; padding:12px; }
       .avatar img{ width:96px; height:96px; }
-      .avatar{ min-height:120px; padding:14px }
     }
 
-    /* Matches container */
-    .matches{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+    /* Matches container: ensure it always takes full width and stacks under avatars */
+    .matches{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      margin-top:12px;
+      width:100%;
+      padding: 0 12px;
+      box-sizing: border-box;
+    }
+
+    /* Force match cards to be full width inside the matches container */
+    .match-card, .scrim-card{
+      width: 100%;
+      box-sizing: border-box;
+    }
 
     /* ----- Style for injected full HTML (match-card) ----- */
     .match-card{
-      background:var(--card); border-radius:12px; padding:14px; box-shadow:var(--shadow);
-      transition:transform .12s ease; overflow:hidden;
+      background:var(--card);
+      border-radius:12px;
+      padding:14px;
+      box-shadow:var(--shadow);
+      transition:transform .12s ease;
+      overflow:hidden;
     }
     .match-card:hover{transform:translateY(-6px)}
     .match-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
     .match-meta{display:flex;flex-direction:column}
     .match-number{color:var(--muted);font-weight:700;font-size:13px}
     .match-title{font-weight:800;font-size:18px}
-    .score-row{display:flex;gap:8px}
+    .score-row{display:flex;gap:8px;flex-wrap:wrap}
     .score-pill{padding:8px 12px;border-radius:12px;background:linear-gradient(180deg,#eef6ff,#f8fbff);color:var(--primary);font-weight:800;border:1px solid rgba(11,102,255,0.06)}
 
     /* ----- Style for JSON-rendered scrim-card (same look) ----- */
     .scrim-card{
-      background:var(--card); border-radius:12px; padding:14px; box-shadow:var(--shadow);
+      background:var(--card);
+      border-radius:12px;
+      padding:14px;
+      box-shadow:var(--shadow);
     }
     .scrim-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-    .scrim-avatars{display:flex;gap:8px}
+    .scrim-avatars{display:flex;gap:8px;flex-wrap:wrap}
     .scrim-avatars img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,0,0,0.04)}
     .scrim-meta{flex:1}
     .scrim-matchnum{color:var(--muted);font-weight:700;font-size:13px}
@@ -104,7 +156,7 @@
         <div class="logo">SR</div>
         <div>
           <div class="title">Scrim Results</div>
-          <div class="subtitle">co stats tuy vao tran dau</div>
+          <div class="subtitle">Clean • Responsive</div>
         </div>
       </div>
       <div>
@@ -112,7 +164,7 @@
       </div>
     </header>
 
-    <!-- AVATARS: 2-per-row, larger -->
+    <!-- AVATARS: 2-per-row, larger (fixed so it fits mobile) -->
     <div class="avatars" id="avatars">
       <div class="avatar">
         <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1449239656897052823/image0.jpg?ex=693e2d1b&is=693cdb9b&hm=1135cf3889720f772d523be2780af4eb5924822934791839d12d40e54103036f&" alt="Avatar 1">
@@ -127,9 +179,11 @@
       <div class="match-card" id="empty">
         <div style="text-align:center;color:var(--muted);font-weight:700">No matches yet — use your Discord command to add results.</div>
       </div>
-      <!-- Bot can append either full .match-card HTML blocks or JSON placeholders like:
-           <div class="scrim-embed" data-match='{"match":206,"teamA":"ecstasy","teamB":"bts","sets":["25 | 14 ecs","25 | 21 bts"],"avatars":[],"players":[{"name":"jaq","stats":"spike=3/7\nrec=1/1"}],"mvp":"jaq"}'></div>
-           The renderer below will convert placeholders into styled cards.
+
+      <!--
+        Bot can append either full .match-card HTML blocks or JSON placeholders like:
+        <div class="scrim-embed" data-match='{"match":206,"teamA":"ecstasy","teamB":"bts","sets":["25 | 14 ecs","25 | 21 bts"],"avatars":[],"players":[{"name":"jaq","stats":"spike=3/7\nrec=1/1"}],"mvp":"jaq"}'></div>
+        The renderer below will convert placeholders into styled cards.
       -->
     </div>
   </div>
@@ -194,8 +248,7 @@
       });
     })();
   </script>
-
-<!-- BEGIN INJECTED MATCH 1 -->
+  <!-- BEGIN INJECTED MATCH 1 -->
 <article class="match-card">
   <div class="match-head">
     <div class="match-meta">
@@ -218,6 +271,5 @@
   <div class="mvp">MVP: <strong>nani</strong></div>
 </article>
 <!-- END INJECTED MATCH 1 -->
-
 </body>
 </html>
