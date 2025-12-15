@@ -2,253 +2,149 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Scrim Results</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#fff;
-      --primary:#0b66ff;
-      --muted:#6b7280;
-      --radius:12px;
-      --shadow:0 12px 30px rgba(12,24,40,0.06);
-      --container:1100px;
-    }
 
-    *{box-sizing:border-box}
+  <style>
     body{
       margin:0;
-      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:var(--bg);
-      color:#0f172a;
       padding:20px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#0f172a;
+      color:#e5e7eb;
+
       display:flex;
-      justify-content:center;
+      flex-direction:column;   /* 🔧 prevents side-by-side bug */
+      align-items:center;
     }
 
     .container{
       width:100%;
-      max-width:var(--container);
-      display:flex;
-      flex-direction:column;
-      gap:18px;
+      max-width:1100px;
     }
 
-    /* Header */
-    .header{display:flex;justify-content:space-between;align-items:center}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#0b6fbf);color:#fff;display:grid;place-items:center;font-weight:800}
-    .title{font-weight:800;font-size:18px}
-    .subtitle{color:var(--muted);font-size:13px}
-
-    /* ===== REPLACED avatar + match layout rules ===== */
-
-    /* Avatar grid: 2-per-row on wide, 1-per-row on small screens.
-       Limit max widths so avatars don't overflow on mobile. */
+    /* ---------- AVATARS (ONLY 2, BIGGER) ---------- */
     .avatars{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2-per-row but never overflow */
-      gap:18px;
-      align-items:center;
-      justify-items:center;
-      margin: 12px auto 6px;
-      width: 100%;
-      max-width: 760px; /* cap the total avatars area */
-      padding: 0 12px;  /* small horizontal padding on mobile */
+      display:flex;
+      justify-content:center;
+      gap:24px;
+      margin-bottom:24px;
+      max-width:900px;
+      width:100%;
     }
 
-    /* Avatar card sizing */
     .avatar{
-      background:var(--card);
-      padding:14px;
-      border-radius:14px;
+      flex:1;
+      background:#020617;
+      border-radius:16px;
+      padding:16px;
       display:flex;
       align-items:center;
-      justify-content:center;
-      box-shadow:var(--shadow);
-      min-height:120px;
-      width:100%;
-      max-width:280px;        /* reduced so it fits mobile */
-      border:1px solid rgba(12,24,40,0.03);
-      margin: 0 auto;
+      gap:16px;
+      max-width:360px;
+      min-height:170px;
     }
 
-    /* Larger image but constrained */
     .avatar img{
-      width:112px;
-      height:112px;
+      width:150px;
+      height:150px;
       border-radius:50%;
       object-fit:cover;
-      display:block;
-      border:4px solid rgba(255,255,255,0.9);
-      box-shadow: 0 8px 24px rgba(12,24,40,0.08);
     }
 
-    @media (max-width:600px){
-      .avatars{ grid-template-columns: 1fr; gap:12px; max-width: 420px; }
-      .avatar{ max-width: 380px; min-height:110px; padding:12px; }
-      .avatar img{ width:96px; height:96px; }
-    }
-
-    /* Matches container: ensure it always takes full width and stacks under avatars */
+    /* ---------- MATCHES ---------- */
     .matches{
       display:flex;
       flex-direction:column;
-      gap:14px;
-      margin-top:12px;
+      gap:18px;
       width:100%;
-      padding: 0 12px;
-      box-sizing: border-box;
     }
 
-    /* Force match cards to be full width inside the matches container */
-    .match-card, .scrim-card{
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    /* ----- Style for injected full HTML (match-card) ----- */
     .match-card{
-      background:var(--card);
-      border-radius:12px;
-      padding:14px;
-      box-shadow:var(--shadow);
-      transition:transform .12s ease;
-      overflow:hidden;
+      background:#020617;
+      border-radius:16px;
+      padding:18px;
     }
-    .match-card:hover{transform:translateY(-6px)}
-    .match-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .match-meta{display:flex;flex-direction:column}
-    .match-number{color:var(--muted);font-weight:700;font-size:13px}
-    .match-title{font-weight:800;font-size:18px}
-    .score-row{display:flex;gap:8px;flex-wrap:wrap}
-    .score-pill{padding:8px 12px;border-radius:12px;background:linear-gradient(180deg,#eef6ff,#f8fbff);color:var(--primary);font-weight:800;border:1px solid rgba(11,102,255,0.06)}
 
-    /* ----- Style for JSON-rendered scrim-card (same look) ----- */
-    .scrim-card{
-      background:var(--card);
-      border-radius:12px;
-      padding:14px;
-      box-shadow:var(--shadow);
+    .match-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:10px;
     }
-    .scrim-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-    .scrim-avatars{display:flex;gap:8px;flex-wrap:wrap}
-    .scrim-avatars img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,0,0,0.04)}
-    .scrim-meta{flex:1}
-    .scrim-matchnum{color:var(--muted);font-weight:700;font-size:13px}
-    .scrim-title{font-weight:800;font-size:18px}
-    .scrim-body{display:grid;grid-template-columns:1fr 220px;gap:12px;margin-top:12px}
-    .scrim-player{padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid rgba(12,24,40,0.03);font-weight:700}
-    .scrim-stats{text-align:right;color:var(--muted);padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid rgba(12,24,40,0.03)}
-    .scrim-mvp{margin-top:12px;padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid rgba(12,24,40,0.03);font-weight:700}
-    @media (max-width:880px){ .scrim-body{grid-template-columns:1fr} .scrim-stats{text-align:left} }
 
-    /* subtle animation */
-    .fade{opacity:0;transform:translateY(6px);animation:in .45s forwards}
-    @keyframes in{to{opacity:1;transform:none}}
+    .teams{
+      font-weight:600;
+      font-size:18px;
+    }
+
+    .sets{
+      display:flex;
+      gap:10px;
+      font-weight:600;
+      color:#38bdf8;
+    }
+
+    .players{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:10px;
+    }
+
+    .player{
+      background:#020617;
+      border-radius:10px;
+      padding:10px;
+      font-size:14px;
+    }
+
+    .player strong{
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .mvp{
+      margin-top:10px;
+      font-weight:700;
+      color:#facc15;
+    }
+
+    @media (max-width:600px){
+      .avatars{
+        flex-direction:column;
+        align-items:center;
+      }
+      .avatar{
+        max-width:420px;
+      }
+      .avatar img{
+        width:130px;
+        height:130px;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="container fade">
-    <header class="header">
-      <div class="brand">
-        <div class="logo">SR</div>
-        <div>
-          <div class="title">Scrim Results</div>
-          <div class="subtitle">Clean • Responsive</div>
-        </div>
-      </div>
-      <div>
-        <a href="https://github.com/nani201992/my-website" target="_blank" rel="noopener" style="background:var(--primary);color:#fff;padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700">Open repo</a>
-      </div>
-    </header>
+  <div class="container">
 
-    <!-- AVATARS: 2-per-row, larger (fixed so it fits mobile) -->
-    <div class="avatars" id="avatars">
+    <!-- TOP IMAGES -->
+    <div class="avatars">
       <div class="avatar">
-        <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1449239656897052823/image0.jpg?ex=693e2d1b&is=693cdb9b&hm=1135cf3889720f772d523be2780af4eb5924822934791839d12d40e54103036f&" alt="Avatar 1">
+        <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1449211976470499362/Picsart_25-12-13_08-27-53-038.jpg?ex=69400d94&is=693ebc14&hm=21923b4ffbbdeca5abf920f188bf655f099554e62c2124206431465bc33807b8&" alt="Team A">
+        <div>Team A</div>
       </div>
       <div class="avatar">
-        <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1449211976470499362/Picsart_25-12-13_08-27-53-038.jpg?ex=693e1354&is=693cc1d4&hm=55319f31ea9029c4efc807b3b82c01524f140847b50323e114ef07309f32f454&" alt="Avatar 2">
+        <img src="https://cdn.discordapp.com/attachments/1059450546626494475/1449239656897052823/image0.jpg?ex=6940275b&is=693ed5db&hm=8918dcd9396d663b83aed23ef4f872ad3e57319773889246c44f5b1814f68016&" alt="Team B">
+        <div>Team B</div>
       </div>
     </div>
 
-    <!-- matches area -->
+    <!-- MATCHES -->
     <div class="matches" id="matches">
-      <div class="match-card" id="empty">
-        <div style="text-align:center;color:var(--muted);font-weight:700">No matches yet — use your Discord command to add results.</div>
-      </div>
-
-      <!--
-        Bot can append either full .match-card HTML blocks or JSON placeholders like:
-        <div class="scrim-embed" data-match='{"match":206,"teamA":"ecstasy","teamB":"bts","sets":["25 | 14 ecs","25 | 21 bts"],"avatars":[],"players":[{"name":"jaq","stats":"spike=3/7\nrec=1/1"}],"mvp":"jaq"}'></div>
-        The renderer below will convert placeholders into styled cards.
-      -->
-    </div>
-  </div>
-
-  <!-- Renderer script: converts .scrim-embed JSON placeholders into styled scrim cards.
-       Also hides empty-state when real matches exist. -->
-  <script>
-    (function(){
-      function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-      function renderScrim(obj){
-        const wrapper = document.createElement('div');
-        wrapper.className = 'scrim-card';
-
-        const avatarsHtml = (obj.avatars||[]).slice(0,6).map(u=>`<img src="${esc(u)}" alt="">`).join('');
-        const scoresHtml = (obj.sets||[]).map(s=>`<div class="score-pill">${esc(s)}</div>`).join('');
-        const players = obj.players||[];
-        let namesHtml='', statsHtml='';
-        for (const p of players){
-          namesHtml += `<div class="scrim-player">${esc(p.name||'—')}</div>\n`;
-          statsHtml += `<div class="scrim-stats">${esc(p.stats||'—')}</div>\n`;
-        }
-        if(!namesHtml){ namesHtml = '<div class="scrim-player">—</div>'; statsHtml = '<div class="scrim-stats">—</div>'; }
-
-        wrapper.innerHTML = `
-          <div class="scrim-top">
-            <div class="scrim-avatars">${avatarsHtml}</div>
-            <div class="scrim-meta">
-              <div class="scrim-matchnum">match ${esc(String(obj.match||''))}</div>
-              <div class="scrim-title">${esc(obj.teamA||'Team A')} <span style="color:var(--muted);font-weight:700">vs</span> ${esc(obj.teamB||'Team B')}</div>
-            </div>
-            <div class="score-row">${scoresHtml}</div>
-          </div>
-          <div class="scrim-body">
-            <div>${namesHtml}</div>
-            <div>${statsHtml}</div>
-          </div>
-          ${ obj.mvp ? `<div class="scrim-mvp">MVP: <strong>${esc(obj.mvp)}</strong></div>` : '' }
-        `;
-        return wrapper;
-      }
-
-      document.addEventListener('DOMContentLoaded', ()=>{
-        const nodes = Array.from(document.querySelectorAll('.scrim-embed[data-match]'));
-        nodes.forEach(n=>{
-          try{
-            const json = n.getAttribute('data-match');
-            const obj = JSON.parse(json);
-            const card = renderScrim(obj);
-            n.replaceWith(card);
-          }catch(e){
-            console.error('scrim parse error', e);
-          }
-        });
-
-        const matchesContainer = document.getElementById('matches');
-        const hasMatch = matchesContainer.querySelector('.match-card, .scrim-card');
-        if(hasMatch){
-          const empty = document.getElementById('empty');
-          if(empty) empty.style.display = 'none';
-        }
-      });
-    })();
-  </script>
-  <!-- BEGIN INJECTED MATCH 1 -->
+      <!-- BOT_INSERT -->
+      <!-- BEGIN INJECTED MATCH 1 -->
 <article class="match-card">
   <div class="match-head">
     <div class="match-meta">
@@ -271,5 +167,40 @@
   <div class="mvp">MVP: <strong>nani</strong></div>
 </article>
 <!-- END INJECTED MATCH 1 -->
+    </div>
+
+  </div>
+
+  <script>
+    // Render matches from bot placeholders
+    document.querySelectorAll('.scrim-embed').forEach(embed=>{
+      const data = JSON.parse(embed.dataset.match);
+
+      const card = document.createElement('article');
+      card.className = 'match-card';
+
+      card.innerHTML = `
+        <div class="match-header">
+          <div class="teams">Match ${data.match} — ${data.teamA} vs ${data.teamB}</div>
+          <div class="sets">
+            ${data.sets.map(s=>`<span>${s}</span>`).join('')}
+          </div>
+        </div>
+
+        <div class="players">
+          ${data.players.map(p=>`
+            <div class="player">
+              <strong>${p.name}</strong>
+              ${p.stats}
+            </div>
+          `).join('')}
+        </div>
+
+        ${data.mvp ? `<div class="mvp">MVP: ${data.mvp}</div>` : ``}
+      `;
+
+      embed.replaceWith(card);
+    });
+  </script>
 </body>
 </html>
